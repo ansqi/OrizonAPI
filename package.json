@@ -1,0 +1,14 @@
+{
+  "name": "orizonapi",
+  "version": "1.0.0",
+  "description": "Progetto NODE",
+  "license": "ISC",
+  "author": "Andrea Squillace",
+  "type": "commonjs",
+  "main": "app.js",
+
+  "dependencies": {
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6"
+  }
+}
