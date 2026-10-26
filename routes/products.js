@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const { pool: db, handleDatabaseError } = require("../db");
+const { pool: db } = require("../db");
 const { parseId, validateString } = require("../utils/validators");
 
 
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const [rows] = await db.execute(
       "SELECT id, nome, data_creazione FROM prodotti",
     );
     return res.json(rows);
   } catch (error) {
-    return handleDatabaseError(error, res);
+    return next(error);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { nome } = req.body || {};
 
   if (!validateString(nome)) {
@@ -37,11 +37,11 @@ router.post("/", async (req, res) => {
       .status(201)
       .json({ id: result.insertId, nome: nome.trim() });
   } catch (error) {
-    return handleDatabaseError(error, res);
+    return next(error);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res, next) => {
   const id = parseId(req.params.id);
   const { nome } = req.body || {};
 
@@ -73,11 +73,11 @@ router.put("/:id", async (req, res) => {
 
     return res.json({ id, nome: nome.trim() });
   } catch (error) {
-    return handleDatabaseError(error, res);
+    return next(error);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
   const id = parseId(req.params.id);
 
   if (id === null) {
@@ -95,7 +95,7 @@ router.delete("/:id", async (req, res) => {
     }
     return res.status(204).send();
   } catch (error) {
-    return handleDatabaseError(error, res);
+    return next(error);
   }
 });
 

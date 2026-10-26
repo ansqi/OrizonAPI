@@ -17,7 +17,7 @@ function validateMail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return typeof email === 'string' && emailRegex.test(email);
 }
-
+//per usi futuri al momento non utilizzato
 function validateProdotti(prodotti) {
   const productList = Array.isArray(prodotti) ? prodotti : [prodotti];
   return (
@@ -30,6 +30,7 @@ function validateProdotti(prodotti) {
     })
   );
 }
+//per usi futuri al momento non utilizzato
 function validateUtenti(utenti) {
   const userList = Array.isArray(utenti) ? utenti : [utenti];
   return (
@@ -45,4 +46,4 @@ function validateUtenti(utenti) {
   );
 }
 
-module.exports = { parseId, validateString, validateMail, validateProdotti, validateUtenti };
+module.exports = { parseId, validateString, validateMail };

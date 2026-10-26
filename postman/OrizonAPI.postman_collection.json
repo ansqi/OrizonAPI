@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "78982e6b-7fd5-4098-9ce3-99eb6bd9cc41",
+    "_postman_id": "c637ac7c-3298-48f3-bb85-0877ee414200",
     "name": "OrizonAPI",
     "description": "Collection di test per tutti gli endpoint attualmente esposti dall'API. Eseguire le richieste nell'ordine proposto per usare gli ID creati durante il run.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -245,12 +245,12 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/customers",
+              "raw": "{{baseUrl}}/products",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "customers"
+                "products"
               ]
             }
           },
@@ -348,45 +348,6 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Risposta HTTP 400: la validazione rifiuta la struttura richiesta per gli utenti', function () { pm.response.to.have.status(400); });",
-                  "pm.test('Errore di validazione atteso', function () { pm.expect(pm.response.json().error).to.eql('Prodotti o utenti non validi'); });"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"prodotti\": [{{productId}}],\n  \"utenti\": [{\n    \"id\": {{customerId}},\n    \"nome\": \"{{customerName}}\",\n    \"cognome\": \"PostmanMod\",\n    \"email\": \"{{customerEmail}}\"\n  }]\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/orders/{{orderId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "orders",
-                "{{orderId}}"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "PUT - Aggiorna ordine (verifica validazione) con UTENTI MULTIPLI",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
                   "pm.test('Risposta HTTP 400: la validazione rifiuta la struttura richiesta per gli utenti', function () { pm.response.to.have.status(400); });\npm.test('Errore di validazione atteso', function () { pm.expect(pm.response.json().error).to.eql('Prodotti o utenti non validi'); });"
                 ]
               }
@@ -402,7 +363,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prodotti\": [{{productId}}],\n  \"utenti\": \n  {\n    \"id\": 1,\n    \"nome\": \"dummy\",\n    \"cognome\": \"dummy\",\n    \"email\": \"dummy@test.it\",\n  },\n  {\n    \"id\": 2,\n    \"nome\": \"dummy\",\n    \"cognome\":\"dummy\",\n    \"email\": \"dummy@test.it\",\n  },\n  {\n    \"id\": 3,\n    \"nome\": \"dummy\",\n    \"cognome\": \"dummy\",\n    \"email\": \"dummy@test.it\",\n  }\n  \n  \n  ]\n}",
+              "raw": "{\n  \"prodotti\": [{{productId}}],\n  \"utenti\": [6,7,8]\n}",
               "options": {
                 "raw": {
                   "language": "text"

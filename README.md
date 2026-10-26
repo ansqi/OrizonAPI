@@ -17,7 +17,7 @@ node app.js
 Il server ascolta sulla porta `5000` (`http://127.0.0.1:5000`). La connessione MySQL è configurata in `db.js`; crea il database importando lo script SQL:
 
 ```bash
-mysql -u root -p < dump_horizon.sql
+mysql -u root -p < migrations.sql
 ```
 
 Lo script crea e seleziona il database `Orizon_db`. Prima di avviare l'applicazione, verifica che la configurazione in `db.js` corrisponda alle credenziali e all'istanza MySQL locali.
