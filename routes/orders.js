@@ -117,20 +117,6 @@ router.post("/", async (req, res, next) => {
     return res.status(201).json({ id: insertedID, prodotti, utenti });
   } catch (error) {
     await connection.rollback();
-
-    if (error.code === "ER_NO_REFERENCED_ROW_2") {
-      if (associazioneInInserimento === "prodotto") {
-        const erroreNotFound = new Error("Prodotto non trovato");
-        erroreNotFound.status = 404;
-        return next(erroreNotFound);
-      }
-
-      if (associazioneInInserimento === "utente") {
-        const erroreNotFound = new Error("Utente non trovato");
-        erroreNotFound.status = 404;
-        return next(erroreNotFound);
-      }
-    }
     return next(error);
   } finally {
     connection.release();
@@ -220,20 +206,6 @@ router.put("/:id", async (req, res, next) => {
     return res.status(200).json({ id, prodotti, utenti });
   } catch (error) {
     await connection.rollback();
-
-    if (error.code === "ER_NO_REFERENCED_ROW_2") {
-      if (associazioneInInserimento === "prodotto") {
-        const erroreNotFound = new Error("Prodotto non trovato");
-        erroreNotFound.status = 404;
-        return next(erroreNotFound);
-      }
-
-      if (associazioneInInserimento === "utente") {
-        const erroreNotFound = new Error("Utente non trovato");
-        erroreNotFound.status = 404;
-        return next(erroreNotFound);
-      }
-    }
     return next(error);
   } finally {
     connection.release();
