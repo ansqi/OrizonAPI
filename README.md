@@ -113,7 +113,7 @@ Il parametro `products` può essere ripetuto per filtrare più nomi, ad esempio 
 
 ## Struttura del database
 
-Lo schema è definito in [`dump_horizon.sql`](./migrations.sql) e contiene il database `Orizon_db` con queste tabelle:
+Lo schema è definito in [`migrations.sql`](./migrations.sql) e contiene il database `Orizon_db` con queste tabelle:
 
 | Tabella | Contenuto |
 |---|---|
