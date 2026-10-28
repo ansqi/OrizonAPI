@@ -140,7 +140,14 @@ router.delete("/:id", async (req, res, next) => {
       "DELETE FROM ordine_prodotto WHERE ordine_id = ?",
       [id],
     );
-    await connection.execute("DELETE FROM ordini WHERE id = ?", [id]);
+    const [result] = await connection.execute(
+      "DELETE FROM ordini WHERE id = ?",
+      [id],
+    );
+    if (result.affectedRows === 0) {
+      await connection.rollback();
+      return res.status(400).json({ error: "Ordine non trovato" });
+    }
     await connection.commit();
     return res.status(204).send();
   } catch (error) {
@@ -177,6 +184,15 @@ router.put("/:id", async (req, res, next) => {
   let associazioneInInserimento;
   try {
     await connection.beginTransaction();
+    const [orders] = await connection.execute(
+      "SELECT id FROM ordini WHERE id = ?",
+      [id],
+    );
+    if (orders.length === 0) {
+      await connection.rollback();
+      return res.status(400).json({ error: "Ordine non trovato" });
+    }
+
     //cancello i prodotti e gli utenti associati all'ordine
     await connection.execute("DELETE FROM ordine_utente WHERE ordine_id = ?", [
       id,

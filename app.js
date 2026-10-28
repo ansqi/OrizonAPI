@@ -21,7 +21,7 @@ app.use((err, req, res, next) => {
 
   if (err.status === 404) {
     return res.status(404)
-    .json({ errore: err.message });
+    .json({ error: err.message });
   }
   if (err.code === "ER_DUP_ENTRY") {
     return res.status(409)

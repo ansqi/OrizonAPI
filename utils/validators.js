@@ -17,33 +17,6 @@ function validateMail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return typeof email === 'string' && emailRegex.test(email);
 }
-//per usi futuri al momento non utilizzato
-function validateProdotti(prodotti) {
-  const productList = Array.isArray(prodotti) ? prodotti : [prodotti];
-  return (
-    productList.every((prodotto) => {
-      const id =
-        typeof prodotto === "object" && prodotto !== null
-          ? prodotto.id
-          : prodotto;
-      return parseId(id) !== null;
-    })
-  );
-}
-//per usi futuri al momento non utilizzato
-function validateUtenti(utenti) {
-  const userList = Array.isArray(utenti) ? utenti : [utenti];
-  return (
-    userList.every(
-      (utente) =>
-        utente !== null &&
-        typeof utente === "object" &&
-        parseId(utente.id) !== null &&
-        validateString(utente.nome) &&
-        validateString(utente.cognome) &&
-        validateMail(utente.email),
-    )
-  );
-}
+
 
 module.exports = { parseId, validateString, validateMail };

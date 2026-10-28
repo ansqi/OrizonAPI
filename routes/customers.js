@@ -61,7 +61,7 @@ router.put('/:id', async (req, res, next) => {
     );
 
     if (rows.length === 0) {
-      return res.status(404).json({ error: 'Utente non trovato' });
+      return res.status(400).json({ error: 'Utente non trovato' });
     }
 
     return res.json(rows[0]);
@@ -84,7 +84,7 @@ router.delete('/:id', async (req, res, next) => {
     );
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'Utente non trovato' });
+      return res.status(400).json({ error: 'Utente non trovato' });
     }
 
     return res.status(204).send();

@@ -14,13 +14,14 @@ npm install
 node app.js
 ```
 
-Il server ascolta sulla porta `5000` (`http://127.0.0.1:5000`). La connessione MySQL è configurata in `db.js`; crea il database importando lo script SQL:
+Il server ascolta sulla porta `5000` (`http://127.0.0.1:5000`). La connessione MySQL è configurata in `db.js`; le credenziali vengono recuperate da un file .env. si può prendere spunto dal file .env.example.
+Crea il database importando lo script SQL:
 
 ```bash
 mysql -u root -p < migrations.sql
 ```
 
-Lo script crea e seleziona il database `Orizon_db`. Prima di avviare l'applicazione, verifica che la configurazione in `db.js` corrisponda alle credenziali e all'istanza MySQL locali.
+Lo script crea e seleziona il database `Orizon_db`. Prima di avviare l'applicazione, verifica che la configurazione utilizzata in in `db.js` corrisponda alle credenziali e all'istanza MySQL locali.
 
 Le richieste con un body devono inviare JSON e impostare `Content-Type: application/json`.
 
@@ -37,13 +38,12 @@ Base URL: `http://127.0.0.1:5000`
 | `PUT` | `/customers/:id` | Aggiorna nome, cognome ed email del cliente indicato. |
 | `DELETE` | `/customers/:id` | Elimina il cliente indicato. |
 
-Esempio di body per `POST` e `PUT`:
+Esempio di body per `POST` e `PUT` pre orders:
 
 ```json
 {
-  "nome": "Anna",
-  "cognome": "Rossi",
-  "email": "anna.rossi@example.com"
+  "prodotti": [id1,id2,id3],
+  "utenti": [id1,id2,id3]
 }
 ```
 
