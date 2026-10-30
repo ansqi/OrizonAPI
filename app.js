@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
       .json({ error: "Il record è associato ad altri dati" });
   }
   if (err.code === "ER_NO_REFERENCED_ROW_2") {
-    return res.status(404)
+    return res.status(400)
     .json({ error: "Prodotto o utente non trovato" });
   }
 

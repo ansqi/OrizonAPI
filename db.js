@@ -1,4 +1,3 @@
-require('dotenv').config()
 const mysql = require('mysql2/promise');
 
 // Creiamo il pool di connessioni

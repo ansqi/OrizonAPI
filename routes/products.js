@@ -67,7 +67,7 @@ router.put("/:id", async (req, res, next) => {
     if (result.affectedRows === 0) {
       const [rows] = await db.execute("SELECT id FROM prodotti WHERE id = ?", [id]);
       if (rows.length === 0) {
-        return res.status(400).json({ error: "Prodotto non trovato" });
+        return res.status(404).json({ error: "Prodotto non trovato" });
       }
     }
 
@@ -91,7 +91,7 @@ router.delete("/:id", async (req, res, next) => {
     );
 
     if (result.affectedRows === 0) {
-      return res.status(400).json({ error: "Prodotto non trovato" });
+      return res.status(404).json({ error: "Prodotto non trovato" });
     }
     return res.status(204).send();
   } catch (error) {

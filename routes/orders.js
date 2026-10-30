@@ -90,7 +90,6 @@ router.post("/", async (req, res, next) => {
     return res.status(400).json({ error: "Utenti non validi" });
   }
   const connection = await db.getConnection();
-  let associazioneInInserimento;
   try {
     //utilizzo una transazione per inserire l'ordine e i prodotti associati
     await connection.beginTransaction();
@@ -98,14 +97,12 @@ router.post("/", async (req, res, next) => {
       "INSERT INTO ordini () VALUES ()",
     );
     let insertedID = result.insertId;
-    associazioneInInserimento = "prodotto";
     for (const prodottoId of prodotti) {
       await connection.execute(
         "INSERT INTO ordine_prodotto (ordine_id, prodotto_id) VALUES (?, ?)",
         [insertedID, prodottoId],
       );
     }
-    associazioneInInserimento = "utente";
     for (const utenteId of utenti) {
       await connection.execute(
         "INSERT INTO ordine_utente (ordine_id, utente_id) VALUES (?, ?)",
@@ -146,7 +143,7 @@ router.delete("/:id", async (req, res, next) => {
     );
     if (result.affectedRows === 0) {
       await connection.rollback();
-      return res.status(400).json({ error: "Ordine non trovato" });
+      return res.status(404).json({ error: "Ordine non trovato" });
     }
     await connection.commit();
     return res.status(204).send();
@@ -178,10 +175,9 @@ router.put("/:id", async (req, res, next) => {
     return res.status(400).json({ error: "Utenti non validi" });
   }
 
-  const productList = Array.isArray(prodotti) ? prodotti : [prodotti];
-  const userList = Array.isArray(utenti) ? utenti : [utenti];
+  const productList = prodotti;
+  const userList = utenti;
   const connection = await db.getConnection();
-  let associazioneInInserimento;
   try {
     await connection.beginTransaction();
     const [orders] = await connection.execute(
@@ -190,7 +186,7 @@ router.put("/:id", async (req, res, next) => {
     );
     if (orders.length === 0) {
       await connection.rollback();
-      return res.status(400).json({ error: "Ordine non trovato" });
+      return res.status(404).json({ error: "Ordine non trovato" });
     }
 
     //cancello i prodotti e gli utenti associati all'ordine
@@ -203,14 +199,12 @@ router.put("/:id", async (req, res, next) => {
       [id],
     );
     //inserisco i nuovi prodotti e utenti associati all'ordine
-    associazioneInInserimento = "prodotto";
     for (const currentProduct of productList) {
       await connection.execute(
         "INSERT INTO ordine_prodotto (ordine_id, prodotto_id) VALUES (?, ?)",
         [id, currentProduct],
       );
     }
-    associazioneInInserimento = "utente";
     for (const currentUser of userList) {
       await connection.execute(
         "INSERT INTO ordine_utente (ordine_id, utente_id) VALUES (?, ?)",
